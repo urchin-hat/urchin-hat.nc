@@ -41,7 +41,7 @@ func handleConnection(conn net.Conn) {
 		log.Printf("access remote=%s bytes=0 status=error error=%q", remote, err)
 		return
 	}
-	n, err := io.WriteString(conn, "hello,world")
+	n, err := io.WriteString(conn, "hello,world\n")
 	if err != nil {
 		log.Printf("access remote=%s bytes=%d status=error error=%q", remote, n, err)
 		return
