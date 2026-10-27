@@ -1,12 +1,42 @@
 # urchin-hat.nc
 
-A TCP server built with Go that streams animated urchin-hat ASCII art to your terminal. Just connect with `nc`!
+A planned TCP server built with Go that streams animated urchin-hat ASCII art to your terminal via `nc`.
 
 `nc`（netcat）で接続すると、ターミナルに自分のキャラクター **urchin-hat** の文字アニメーションが流れるサーバーです。Go で実装し、Google Cloud の Compute Engine（GCE）で世界中から接続できるサービスとして公開する予定です。
 
 ## Status
 
-現在はプロジェクトの準備段階です。サーバーの実装・デプロイ・接続先の公開はこれから行います。
+mise による Go 開発環境と Go モジュールを初期化しています。サーバーの実装・デプロイ・接続先の公開はこれから行います。
+
+## Development
+
+### セットアップ
+
+[mise の公式手順](https://mise.jdx.dev/getting-started.html)に従って mise をインストールしてから、次を実行します。
+
+```sh
+git clone https://github.com/urchin-hat/urchin-hat.nc.git
+cd urchin-hat.nc
+mise trust
+mise install
+mise exec -- go version
+```
+
+Go のバージョンは `mise.toml` で **1.27.3** に固定しています。Go モジュール名は `github.com/urchin-hat/urchin-hat.nc` です。個人用の設定は Git 管理対象外の `mise.local.toml` に記載できます。
+
+`mise exec --` を使うと、シェルの設定に依存せずプロジェクトで指定した Go を実行できます。通常の `go` コマンドとして使いたい場合は、[シェルの有効化手順](https://mise.jdx.dev/getting-started.html)を参照してください。
+
+### 開発時のコマンド
+
+Go のソースコードを追加した後は、次のコマンドで整形・テスト・ビルドを実行できます。
+
+```sh
+mise exec -- go fmt ./...
+mise exec -- go test ./...
+mise exec -- go build ./...
+```
+
+現時点では Go のパッケージやテストはありません。`go test ./...` は対象パッケージがないため失敗します。サーバーの起動コマンドは実装時に追記します。
 
 ## How it works
 
