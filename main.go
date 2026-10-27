@@ -36,11 +36,15 @@ func serve(listener net.Listener) error {
 
 func handleConnection(conn net.Conn) {
 	defer conn.Close()
+	remote := conn.RemoteAddr().String()
 	if err := conn.SetWriteDeadline(time.Now().Add(5 * time.Second)); err != nil {
-		log.Printf("set write deadline: %v", err)
+		log.Printf("access remote=%s bytes=0 status=error error=%q", remote, err)
 		return
 	}
-	if _, err := io.WriteString(conn, "hello,world\n"); err != nil {
-		log.Printf("write greeting: %v", err)
+	n, err := io.WriteString(conn, "hello,world")
+	if err != nil {
+		log.Printf("access remote=%s bytes=%d status=error error=%q", remote, n, err)
+		return
 	}
+	log.Printf("access remote=%s bytes=%d status=ok", remote, n)
 }

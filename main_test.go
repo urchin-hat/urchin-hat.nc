@@ -32,8 +32,8 @@ func TestServe(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if string(got) != "hello,world\n" {
-			t.Fatalf("greeting = %q, want %q", got, "hello,world\n")
+		if string(got) != "hello,world" {
+			t.Fatalf("greeting = %q, want %q", got, "hello,world")
 		}
 	}
 
