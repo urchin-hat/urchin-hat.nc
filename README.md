@@ -6,7 +6,7 @@ A planned TCP server built with Go that streams animated urchin-hat ASCII art to
 
 ## Status
 
-mise による Go 開発環境と Go モジュールを初期化しています。サーバーの実装・デプロイ・接続先の公開はこれから行います。
+TCP 接続に `hello,world` を返す最小構成のサーバーを実装しています。ASCII アニメーションの配信・デプロイ・接続先の公開はこれから行います。
 
 ## Development
 
@@ -28,15 +28,34 @@ Go のバージョンは `mise.toml` で **1.27.3** に固定しています。G
 
 ### 開発時のコマンド
 
-Go のソースコードを追加した後は、次のコマンドで整形・テスト・ビルドを実行できます。
+次のコマンドで整形・テスト・ビルドを実行できます。
 
 ```sh
 mise exec -- go fmt ./...
 mise exec -- go test ./...
-mise exec -- go build ./...
+mise exec -- go build -o /tmp/urchin-hat-nc .
 ```
 
-現時点では Go のパッケージやテストはありません。`go test ./...` は対象パッケージがないため失敗します。サーバーの起動コマンドは実装時に追記します。
+### ローカルで起動・接続
+
+```sh
+mise exec -- go run .
+```
+
+別のターミナルで接続します（`nc` が必要です）。
+
+```sh
+nc 127.0.0.1 2323
+# hello,world
+```
+
+サーバーは `hello,world` と改行を送信して接続を閉じ、次の接続を受け付けます。サーバーを停止するには、起動したターミナルで `Ctrl+C` を押します。
+
+デフォルトの待受アドレスは `127.0.0.1:2323` です。変更する場合は `-addr` を指定します。
+
+```sh
+mise exec -- go run . -addr 127.0.0.1:12345
+```
 
 ## How it works
 
@@ -64,9 +83,7 @@ nc <HOST> <PORT>
 
 ## Planned features
 
-- Go による TCP サーバー
 - urchin-hat の ASCII アニメーション配信
-- 複数クライアントの同時接続
 - Google Cloud Compute Engine へのデプロイ
 
 ## Blog
